@@ -1,0 +1,70 @@
+function AssingCheck() {
+  
+  var spreadsheet = SpreadsheetApp.openById("1113ZbrKAFgWj6BBp5aWgIlqB26yO4R58uQwGHFJ_b98");
+  var sheet = spreadsheet.getSheetByName('シフト_福岡3');  
+  
+  var range = sheet.getDataRange();
+  var values = range.getValues();
+  //var lastRow = sheet.getLastRow();
+  var lastRow = sheet.getRange("A:A").getValues();
+  lastRow = lastRow.filter(String).length;
+  var lastColumn = sheet.getLastColumn();
+  var now = new Date(); 
+    const TIMESTAMP2 = 0 
+    const MENTORNAME=0
+    const MENTORURL=1
+    var assingmenter=[]; 
+  var AsighnDate = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
+  var AsighnDate=Utilities.formatDate(AsighnDate,"JST","yyyy/MM/dd");
+  var timestamp = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm:ss');
+  
+  for(var k=3;k<lastColumn;k++){
+    
+    var timestamp = Utilities.formatDate(new Date(values[TIMESTAMP2][k]), "Asia/Tokyo", "yyyy/MM/dd");
+    
+    if(timestamp==AsighnDate){
+      for(var s=3;s<lastRow;s++){
+        if(values[s][k] == "○"){
+          var assingmenter1=values[s][MENTORURL];
+          //armenter.push(asmenter);
+          assingmenter.push('<@'+assingmenter1+'>');
+        }
+        
+      }
+      
+    }
+    
+  }
+  
+    var mentermessage = '明日のシフトだよ！☺️\n'
+                     + assingmenter 
+                     + '\n';
+    toslack(mentermessage,AsighnDate);  
+
+}
+
+
+
+function toslack(str,AsighnDate){
+
+  var username = AsighnDate +'の説明会シフト';     // 通知時に表示されるユーザー名
+  var icon     = ':sunny:';  // 通知時に表示されるアイコン(※)
+  var postUrl  = "https://hooks.slack.com/services/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";
+  
+  var jsonData = {
+    "username" :username,
+     "icon_emoji": icon,
+     "text" : str    
+  };
+  
+  var payload = JSON.stringify(jsonData);
+
+  var options = {
+    "method" : "post",
+    "contentType" : "application/json",
+    "payload" : payload
+  };
+
+  UrlFetchApp.fetch(postUrl, options);
+
+}

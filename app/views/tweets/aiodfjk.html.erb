@@ -1,0 +1,103 @@
+<div class ="index_image">
+</div>
+<div class ="index_rank">
+    <p>ランキングから探す</p>
+    <div class= "rank_high">
+        <div class= "rank_high_left">
+                <div class= "index_genre">
+                    【恋愛】
+                </div>
+            <div class ="rank_container">
+                <% @ranking.each.with_index(1) do |t, i| %>
+                    <div class= "degree">
+                        第<%= i %>位
+                    </div>
+                    <div class = "rank_container_l">
+                        <div class= "name_r">
+                            <%= t.name %>
+                        </div>
+                        <div class= "pic">
+                            <%= link_to (image_tag "#{t.dramaimage}", class:"drama_image_"), drama_path(t.id) %>
+                        </div>
+                        <div class= "average_only">
+                            <%= t.comments.average(:rate) %>点
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+
+        <div class ="rank_container">
+            <div class= "rank_high_right">
+                <div class= "index_genre">
+                    【 ファンタジー・SF】
+                </div>
+                <% @klm.each.with_index(1) do |t, i| %>
+                    <div class= "degree">
+                        第<%= i %>位
+                    </div>
+                    <div class = "rank_container_l">
+                        <div class= "name_r">
+                            <%= t.name %>
+                        </div>
+                        <div class= "pic">
+                            <%= link_to (image_tag "#{t.dramaimage}", class:"drama_image_"), drama_path(t.id) %>
+                        </div>
+                        <div class= "average_only">
+                            <%= t.comments.average(:rate) %>点
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class= "rank_row">
+        <div class= "rank_row_left">
+                <div class= "index_genre">
+                【復習・愛憎劇】
+                </div>
+            <div class ="rank_container">
+                <% @xxx.each.with_index(1) do |t, i| %>
+                    <div class= "degree">
+                        第<%= i %>位
+                    </div>
+                    <div class = "rank_container_l">
+                        <div class= "name_r">
+                            <%= t.name %>
+                        </div>
+                        <div class= "pic">
+                            <%= link_to (image_tag "#{t.dramaimage}", class:"drama_image_"), drama_path(t.id) %>
+                        </div>
+                        <div class= "average_only">
+                            <%= t.comments.average(:rate) %>点
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+
+        <div class= "rank_row_right">
+            <div class= "index_genre">
+            【感動】
+            </div>
+            <div class ="rank_container">
+                <% @oooo.each.with_index(1) do |t, i| %>
+                    <div class= "degree">
+                        第<%= i %>位
+                    </div>
+                    <div class = "rank_container_l">
+                        <div class= "name_r">
+                            <%= t.name %>
+                        </div>
+                        <div class= "pic">
+                            <%= link_to (image_tag "#{t.dramaimage}", class:"drama_image_"), drama_path(t.id) %>
+                        </div>
+                        <div class= "average_only">
+                            <%= t.comments.average(:rate) %>点
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>

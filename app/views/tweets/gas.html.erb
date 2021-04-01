@@ -1,0 +1,74 @@
+function use(){
+    let urlFukuoka = "https://hooks.slack.com/services/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";
+    let urlNagasaki = "https://hooks.slack.com/services/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";
+    let urlHiroshima = "https://hooks.slack.com/services/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";
+    
+    makeMessage(4,urlFukuoka);
+    //makeMessage(16,urlNagasaki);
+    //makeMessage(28,urlHiroshima);
+  }
+  function makeMessage(startRow, url) {
+    
+    var spreadsheet = SpreadsheetApp.openById("1iVxA9SrS3KJ5OOMX6kthDJnm8dghJnY4PL_ymIE7v6U");
+    var sheet = spreadsheet.getSheetByName('通知用');  
+    var range = sheet.getDataRange().getValues();
+  
+    var now = new Date();
+    //現在のQのカラム数
+    var nowQ = 4;
+    startRow -= 1;
+    //iPhone現在と残り
+    var iphoneNow = range[startRow][nowQ-1]
+    var iphoneNeed = range[startRow+2][nowQ-1]
+    //Game現在と残り
+    var gameNow = range[startRow+3][nowQ-1]
+    var gameNeed = range[startRow+5][nowQ-1]
+    //Web現在と残り
+    var webNow = range[startRow+6][nowQ-1]
+    var webNeed = range[startRow+8][nowQ-1]
+    //全体の現在と残り
+    var allNow = range[startRow+9][nowQ-1]
+    //var allNeed = range[19][nowQ-1]
+    var AsighnDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    // @ts-ignore
+    AsighnDate=Utilities.formatDate(AsighnDate,"JST","yyyy/MM/dd");
+    
+    var iphoneSay = '\niPhone : '+iphoneNow+'人 → 残り'+  iphoneNeed+'人';
+    var gameSay = '\ngame   : '  +gameNow+'人 → 残り'+  gameNeed+'人';
+    var webSay = '\nweb    : '   +webNow+'人 → 残り'+   webNeed+'人';
+  
+    var message =  '日付 ： '+  AsighnDate
+                  +'\n'+ range[startRow-1][nowQ-1]
+                  +'\n\n受講生数 '+"*`"+allNow +"`*"+ ' 人！'
+                  +'\n```'
+                  +iphoneSay+gameSay+webSay
+                  +'\n```';
+    
+    //Logger.log(message);
+    toslack(message,AsighnDate,url);
+      
+  }
+  
+  
+  function toslack(str,AsighnDate, url){
+      var username = '入会情報！';     // 通知時に表示されるユーザー名
+      var icon     = ':festival:';  // 通知時に表示されるアイコン(※)
+      var postUrl= url;
+    
+      var jsonData = {
+      "username" :username,
+       "icon_emoji": icon,
+       "text" : str
+      
+    };
+    var payload = JSON.stringify(jsonData);
+  
+    var options = {
+      "method" : "post",
+      "contentType" : "application/json",
+      "payload" : payload
+    };
+  
+    UrlFetchApp.fetch(postUrl, options);
+  
+  }

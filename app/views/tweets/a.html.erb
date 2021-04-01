@@ -1,0 +1,48 @@
+<canvas id="myChart"></canvas>
+<script>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+  type: 'radar',
+  data: {
+    labels: ["Speed", "Physical", "Dribble", "Kickpower", "Clever", "Heading"],
+    datasets: 
+    [
+        {
+        label: '@tweet.name',
+        backgroundColor: 'rgba(102,255,129,0.2)',
+        borderColor: 'rgba(122,255,129,0.2)',
+        data: [@tweet., 42, 42, 43]
+        },
+       
+    ]
+  },
+  options: {
+      scale: {
+          ticks: {
+              suggestedMin: 0,
+              suggestedMax: 100
+          }
+      }
+  }
+});
+</script>
+
+
+
+
+<%= image_tag e.user.userimage_url, size:'20x20', class:"room-userimage"  %>
+
+
+
+<%= link_to "<img src=<%= t.drama_image %> class = "card-img-top">", drama_path(t.id) %>
+
+<%= image_tag t.drama_image_url, class:"card-img-top" if t.drama_image? %>
+
+<%= link_to image_tag("img_logo.png", class:"image_switch"), "/" %>
+<%= link_to image_tag("t.drama_image_url", class:"icard-img-top"), "/rooms/#{t.id}" %>
+
+
+<div class="user_image"><img src=<%= t.drama_image %> class = "card-img-top"></div>
+
+<%= link_to (image_tag "#{t.drama_image}"), drama_path(t.id), class:"card-img-top" %>
+

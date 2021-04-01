@@ -1,0 +1,75 @@
+<h1>GeekTwitter</h1>
+<h3>Tweet詳細</h3>
+<div class="tweet">
+  <p><%= @tweet.body %></p>
+  <p><%= @tweet.created_at %></p>
+</div>
+
+<div id = "star-rate-<%= @tweet.id %>"></div>
+<script>
+  $('#star-rate-<%= @tweet.id %>').raty({
+    size: 36,
+    starOff:  '<%= asset_path('star-off.png') %>',
+    starOn : '<%= asset_path('star-on.png') %>',
+    starHalf: '<%= asset_path('star-half.png') %>',
+    half: true,
+    readOnly: true,
+    score: <%= @tweet.rate %>,
+  })
+</script>
+
+<% @tweet.tags.each do |tag| %>
+  <span><%= tag.name %></span>
+<% end %>
+
+<div class="comment-wrapper">
+<%= form_with(model: [@tweet, @comment], local: true) do |f| %>
+      <%= f.text_area :content %><br>
+        
+  <%= f.submit %>
+<% end %>
+
+<% @comments.each do |comment| %>
+  <p><%= comment.content %></p>
+  
+<% end %>
+
+<%= link_to "Tweet一覧に戻る", tweets_path %>
+
+
+
+<canvas id="myChart"></canvas>
+<script>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+  type: 'radar',
+  data: {
+    labels: ["Aiueo", "Kakiku", "Sasisu", "Tatitu"],
+    datasets: 
+    [
+        {
+        label: '<%= @tweet.body %>',
+        backgroundColor: 'rgba(122,255,129,0.2)',
+        borderColor: 'rgba(122,255,129,0.2)',
+        data: [<%= @tweet.aiueo %>, <%= @tweet.kakiku %>, <%= @tweet.sasisu %>, <%= @tweet.tatitu %>]
+        },
+    ]
+  },
+  options: {
+      scale: {
+          ticks: {
+              suggestedMin: 0,
+              suggestedMax: 100
+          }
+      }
+  }
+});
+</script>
+
+
+
+
+
+
+
+

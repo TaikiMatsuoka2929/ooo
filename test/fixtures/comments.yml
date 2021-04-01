@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  user: one
+  tweet: one
+  rate: 1.5
+
+two:
+  content: MyString
+  user: two
+  tweet: two
+  rate: 1.5
